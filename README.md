@@ -23,7 +23,8 @@ i.e.:
 ```
 docker run -d --name=neo4j --publish=7474:7474 --publish=7687:7687 neo4j
 ```
-Once your API service is running (see step above), run the populate script
+Run main.py
+i.e.:
 ```
-
+python3 main.py
 ```
