@@ -28,3 +28,11 @@ i.e.:
 ```
 python3 main.py
 ```
+
+## GDSL Workaround
+
+```
+docker cp /tmp/neo4j.conf neo4j:/var/lib/neo4j/conf/
+docker cp /tmp/neo4j-graph-data-science-2.2.2.jar neo4j:/var/lib/neo4j/plugins/
+docker restart neo4j
+```

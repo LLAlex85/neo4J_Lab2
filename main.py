@@ -76,13 +76,13 @@ class TwitterApp(object):
                 CREATE (u)-[r:FROM]->(c)
                 RETURN type(r)""", username=username, country=country)
 
-    def _create_user_to_tweet_relationship(self, username, _id):
+    def _create_user_to_tweet_relationship(self, username, _id, timestamp):
         with self.driver.session() as session:
             session.run("""
                 MATCH (u:User), (t:Tweet)
                 WHERE u.username=$username AND t._id=$_id
-                CREATE (u)-[r:TWEETED]->(t)
-                RETURN type(r)""", username=username, _id=_id)
+                CREATE (u)-[r:TWEETED {timestamp: $timestamp}]->(t)
+                RETURN type(r)""", username=username, _id=_id, timestamp=timestamp)
 
     def init(self, source):
         with open(source, newline='') as csv_file:
@@ -99,14 +99,14 @@ class TwitterApp(object):
                     if token.startswith('@'):
                         self._create_user_node(token)
                         self._create_user_to_user_relationship(r["handle"], token, r["date"])
-                self._create_user_to_tweet_relationship(r["handle"], r["tweet_id"])
+                self._create_user_to_tweet_relationship(r["handle"], r["tweet_id"], r["date"])
                 self._create_user_to_country_relationship(r["handle"], r["country"])
 
 if __name__ == "__main__":
     # Read connection env variables
     neo4j_uri = os.getenv('NEO4J_URI', 'bolt://localhost:7687')
     neo4j_user = os.getenv('NEO4J_USER', 'neo4j')
-    neo4j_password = os.getenv('NEO4J_PASSWORD', 'vocal-michael-caviar-water-coral-8710')
+    neo4j_password = os.getenv('NEO4J_PASSWORD', 'eternal-food-ford-quiz-visitor-5127')
 
     twitter = TwitterApp(neo4j_uri, neo4j_user, neo4j_password)
     twitter.init("data/tweets.csv")
