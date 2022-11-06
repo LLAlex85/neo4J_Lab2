@@ -106,7 +106,7 @@ if __name__ == "__main__":
     # Read connection env variables
     neo4j_uri = os.getenv('NEO4J_URI', 'bolt://localhost:7687')
     neo4j_user = os.getenv('NEO4J_USER', 'neo4j')
-    neo4j_password = os.getenv('NEO4J_PASSWORD', 'eternal-food-ford-quiz-visitor-5127')
+    neo4j_password = os.getenv('NEO4J_PASSWORD', 'lozano')
 
     twitter = TwitterApp(neo4j_uri, neo4j_user, neo4j_password)
     twitter.init("data/tweets.csv")
